@@ -1,8 +1,8 @@
-const router = require("express").Router();
+const route = require("express").Router();
 
 const { addLeave, getAllLeaves } = require("../service/leaveService");
 
-router.post("/leave", async (req, res) => {
+route.post("/leave", async (req, res) => {
   const newLeave = req.body;
   if (newLeave) {
     const response = await addLeave(newLeave);
@@ -16,7 +16,7 @@ router.post("/leave", async (req, res) => {
   return res.status(400).send({ status: "Invalid Request" });
 });
 
-router.get("/leave", async (req, res) => {
+route.get("/leave", async (req, res) => {
   const { data } = req.query;
   const response = await getAllLeaves(data);
   if (response.ok) {
@@ -26,4 +26,4 @@ router.get("/leave", async (req, res) => {
   return res.status(500).send({ status: "Internal Server Error" });
 });
 
-module.exports = router;
+module.exports = route;
