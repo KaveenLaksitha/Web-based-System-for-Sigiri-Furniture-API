@@ -84,7 +84,7 @@ const isAttendanceFoundForDate = async (id, date) => {
   }
 };
 
-/*add employee part*/
+/*employee handling part*/
 
 const addEmployeeRepo = async ({
   fName,
@@ -160,6 +160,104 @@ const getEmployeeRepo = async (id) => {
   }
 };
 
+const getAllEmployeeRecords = async () => {
+  try {
+    await client.connect();
+    const collection = client.db("ems").collection("employees");
+
+    const response = await collection.find().toArray();
+
+    return { ok: true, data: response };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB");
+    return { ok: false };
+  }
+};
+
+const updateEmployeeRecord = async (userId, payload) => {
+  try {
+    await client.connect();
+    const collection = client.db("ems").collection("employees");
+
+    const response = await collection.updateOne(
+      { userId: userId },
+      {
+        $set: {
+          FirstName: payload.fName,
+          LastName: payload.lName,
+          eMail: payload.email,
+          NIC: payload.nic,
+          MaritalStatus: payload.maritalStat,
+          CurrentAddress: payload.currAdd,
+          PermanentAddress: payload.permAdd,
+          MobileNumber: payload.mobileNo,
+          LandLineNumber: payload.landLine,
+          EmergencyContact: payload.emgContact,
+          Designation: payload.designation,
+          Department: payload.department,
+          /*EmployeePicture: empPic,
+          CV: cv,*/
+        },
+      }
+    );
+
+    return { ok: true, data: response };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB", error);
+    return { ok: false };
+  }
+};
+
+const deleteEmployeeRecord = async (userId) => {
+  try {
+    await client.connect();
+    const collection = client.db("ems").collection("employees");
+
+    const response = await collection.deleteOne({ userId: userId });
+
+    return { ok: true, data: response };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB", error);
+    return { ok: false };
+  }
+};
+
+//leave management part
+const addLeaveRepo = async ({ fName, lName, from, to, days, reason }) => {
+  try {
+    await client.connect();
+    const collection = client.db("ems").collection("leaves");
+
+    const response = await collection.insertOne({
+      FirstName: fName,
+      LastName: lName,
+      from: from,
+      to: to,
+      days: days,
+      reason: reason,
+    });
+
+    return { ok: response.result.ok === 1 };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB");
+    return { ok: false };
+  }
+};
+
+const getAllLeaveRecords = async () => {
+  try {
+    await client.connect();
+    const collection = client.db("ems").collection("leaves");
+
+    const response = await collection.find().toArray();
+
+    return { ok: true, data: response };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB");
+    return { ok: false };
+  }
+};
+
 module.exports = {
   createAttendance,
   getAttendanceRecords,
@@ -167,4 +265,9 @@ module.exports = {
   getAllAttendanceRecords,
   addEmployeeRepo,
   getEmployeeRepo,
+  getAllEmployeeRecords,
+  updateEmployeeRecord,
+  deleteEmployeeRecord,
+  addLeaveRepo,
+  getAllLeaveRecords,
 };
