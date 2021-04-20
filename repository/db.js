@@ -1,7 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 
 const uri =
-  "mongodb+srv://kaveen:ABC123@employeedb.hlhnq.mongodb.net/ems?retryWrites=true&w=majority";
+  "mongodb+srv://sigiriuser:sigiri123@sigirifurniture.4iws3.mongodb.net/sigiriDB?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -12,7 +12,7 @@ const client = new MongoClient(uri, {
 const createAttendance = async (id, epochTime, date) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("attendance");
+    const collection = client.db("sigiriDB").collection("attendance");
 
     const response = await collection.insertOne({
       userId: id,
@@ -31,7 +31,7 @@ const createAttendance = async (id, epochTime, date) => {
 const getAttendanceRecords = async (id, fromTime = 0) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("attendance");
+    const collection = client.db("sigiriDB").collection("attendance");
 
     const response = await collection
       .find({
@@ -50,7 +50,7 @@ const getAttendanceRecords = async (id, fromTime = 0) => {
 const getAllAttendanceRecords = async (fromTime = 0) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("attendance");
+    const collection = client.db("sigiriDB").collection("attendance");
 
     const response = await collection
       .find({
@@ -68,7 +68,7 @@ const getAllAttendanceRecords = async (fromTime = 0) => {
 const isAttendanceFoundForDate = async (id, date) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("attendance");
+    const collection = client.db("sigiriDB").collection("attendance");
 
     const response = await collection
       .find({
@@ -111,7 +111,7 @@ const addEmployeeRepo = async ({
 }) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("employees");
+    const collection = client.db("sigiriDB").collection("employees");
 
     const response = await collection.insertOne({
       FirstName: fName,
@@ -147,7 +147,7 @@ const addEmployeeRepo = async ({
 const getEmployeeRepo = async (id) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("employees");
+    const collection = client.db("sigiriDB").collection("employees");
 
     const response = await collection.findOne({
       userId: id,
@@ -163,7 +163,7 @@ const getEmployeeRepo = async (id) => {
 const getAllEmployeeRecords = async () => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("employees");
+    const collection = client.db("sigiriDB").collection("employees");
 
     const response = await collection.find().toArray();
 
@@ -177,7 +177,7 @@ const getAllEmployeeRecords = async () => {
 const updateEmployeeRecord = async (userId, payload) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("employees");
+    const collection = client.db("sigiriDB").collection("employees");
 
     const response = await collection.updateOne(
       { userId: userId },
@@ -211,7 +211,7 @@ const updateEmployeeRecord = async (userId, payload) => {
 const deleteEmployeeRecord = async (userId) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("employees");
+    const collection = client.db("sigiriDB").collection("employees");
 
     const response = await collection.deleteOne({ userId: userId });
 
@@ -226,7 +226,7 @@ const deleteEmployeeRecord = async (userId) => {
 const addLeaveRepo = async ({ fName, lName, from, to, days, reason }) => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("leaves");
+    const collection = client.db("sigiriDB").collection("leaves");
 
     const response = await collection.insertOne({
       FirstName: fName,
@@ -247,7 +247,7 @@ const addLeaveRepo = async ({ fName, lName, from, to, days, reason }) => {
 const getAllLeaveRecords = async () => {
   try {
     await client.connect();
-    const collection = client.db("ems").collection("leaves");
+    const collection = client.db("sigiriDB").collection("leaves");
 
     const response = await collection.find().toArray();
 
