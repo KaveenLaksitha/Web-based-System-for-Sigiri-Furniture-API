@@ -222,6 +222,20 @@ const deleteEmployeeRecord = async (userId) => {
   }
 };
 
+const getAllNicRecs = async () => {
+  try {
+    await client.connect();
+    const collection = client.db("sigiriDB").collection("employees");
+
+    const response = await collection.find().toArray();
+
+    return { ok: true, data: response };
+  } catch (error) {
+    console.log("Something went wrong while connecting to DB");
+    return { ok: false };
+  }
+};
+
 //leave management part
 const addLeaveRepo = async ({ fName, lName, from, to, days, reason }) => {
   try {
@@ -270,4 +284,5 @@ module.exports = {
   deleteEmployeeRecord,
   addLeaveRepo,
   getAllLeaveRecords,
+  getAllNicRecs,
 };
