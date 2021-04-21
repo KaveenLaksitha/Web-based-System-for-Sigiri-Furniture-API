@@ -12,8 +12,8 @@ const inventorySchema = new Schema({
     currentstock: { type: Number, required: true },
     newstock: { type: Number, required: true },
     minrequired: { type: Number, required: true },
-    dateofmanufactured: { type: Date, required: true },
-    lastupdated: { type: Date, required: true },
+    dateofmanufactured: { type: String, required: true },
+    lastupdated: { type: String, required: true },
 
 }, {
     timestamps: true,
